@@ -259,7 +259,81 @@
             e.preventDefault();
           }
         });
+
+        // 載入儲存的資料
+        loadSavedData();
       });
+
+      // 載入儲存的資料
+      function loadSavedData() {
+        try {
+          const catData = localStorage.getItem("petAgeCalculator_cat");
+          const dogData = localStorage.getItem("petAgeCalculator_dog");
+
+          // 預設載入貓的資料（因為預設是貓）
+          if (catData) {
+            const data = JSON.parse(catData);
+            if (data.petName && data.petBirthday) {
+              document.getElementById("petName").value = data.petName;
+              document.getElementById("petBirthday").value = data.petBirthday;
+
+              // 自動計算並顯示結果
+              setTimeout(() => {
+                calculateWithoutAlert();
+              }, 100);
+            }
+          }
+        } catch (e) {
+          console.error("載入資料失敗:", e);
+        }
+      }
+
+      // 儲存資料到 localStorage（分別儲存貓和狗）
+      function saveData(petType, petName, petBirthday) {
+        const data = {
+          petName: petName,
+          petBirthday: petBirthday,
+        };
+        localStorage.setItem(
+          `petAgeCalculator_${petType}`,
+          JSON.stringify(data)
+        );
+      }
+
+      // 載入對應寵物類型的資料
+      function loadPetData(petType) {
+        try {
+          const savedData = localStorage.getItem(`petAgeCalculator_${petType}`);
+          if (savedData) {
+            const data = JSON.parse(savedData);
+            if (data.petName && data.petBirthday) {
+              document.getElementById("petName").value = data.petName;
+              document.getElementById("petBirthday").value = data.petBirthday;
+
+              // 自動計算並顯示結果
+              setTimeout(() => {
+                calculateWithoutAlert();
+              }, 100);
+            } else {
+              clearInputs();
+            }
+          } else {
+            clearInputs();
+          }
+        } catch (e) {
+          console.error("載入資料失敗:", e);
+          clearInputs();
+        }
+      }
+
+      // 清空輸入框和結果
+      function clearInputs() {
+        document.getElementById("petName").value = "";
+        document.getElementById("petBirthday").value = "";
+        const resultDiv = document.getElementById("result");
+        resultDiv.classList.remove("show");
+        resultDiv.innerHTML = "";
+      }
 
       function togglePet(petType) {
         currentPet = petType;
@@ -287,6 +361,9 @@
           calculateBtn.style.backgroundColor = "#e2b355";
           updateReactionColor("#e2b355");
         }
+
+        // 載入對應寵物類型的資料
+        loadPetData(petType);
       }
 
       function updateReactionColor(color) {
@@ -299,7 +376,6 @@
       function calculate() {
         const petName = document.getElementById("petName").value.trim();
         const petBirthday = document.getElementById("petBirthday").value;
-        const resultDiv = document.getElementById("result");
 
         if (!petName) {
           alert("請輸入名稱");
@@ -311,6 +387,28 @@
           return;
         }
 
+        // 儲存資料到 localStorage
+        saveData(currentPet, petName, petBirthday);
+
+        // 執行計算
+        performCalculation(petName, petBirthday);
+      }
+
+      // 不顯示 alert 的計算函數（用於自動載入）
+      function calculateWithoutAlert() {
+        const petName = document.getElementById("petName").value.trim();
+        const petBirthday = document.getElementById("petBirthday").value;
+
+        if (!petName || !petBirthday) {
+          return;
+        }
+
+        performCalculation(petName, petBirthday);
+      }
+
+      // 執行計算邏輯
+      function performCalculation(petName, petBirthday) {
+        const resultDiv = document.getElementById("result");
         const birthDate = new Date(petBirthday);
         const today = new Date();
         const ageInDays = Math.floor(
