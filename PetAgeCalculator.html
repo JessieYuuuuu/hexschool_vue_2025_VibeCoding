@@ -201,7 +201,7 @@
   <body>
     <div class="container">
       <div class="pet-image">
-        <img id="petImg" src="img/cat.png" alt="寵物圖片" />
+        <img id="petImg" src="./img/cat.png" alt="寵物圖片" />
       </div>
       <div class="calculator">
         <div class="pet-toggle">
@@ -273,7 +273,7 @@
         if (petType === "cat") {
           container.style.flexDirection = "row-reverse";
           body.style.backgroundColor = "#4f89b1";
-          petImg.src = "img/cat.png";
+          petImg.src = "./img/cat.png";
           catBtn.classList.add("active");
           dogBtn.classList.remove("active");
           calculateBtn.style.backgroundColor = "#4f89b1";
@@ -281,7 +281,7 @@
         } else {
           container.style.flexDirection = "row";
           body.style.backgroundColor = "#e2b355";
-          petImg.src = "img/dog.png";
+          petImg.src = "./img/dog.png";
           dogBtn.classList.add("active");
           catBtn.classList.remove("active");
           calculateBtn.style.backgroundColor = "#e2b355";
