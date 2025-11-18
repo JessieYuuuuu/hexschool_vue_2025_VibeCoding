@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>寵物年齡計算機</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Microsoft JhengHei", Arial, sans-serif;
+        background-color: #4f89b1;
+        transition: background-color 0.3s ease;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .container {
+        width: 70vw;
+        height: 100vh;
+        display: flex;
+        flex-direction: row-reverse;
+        align-items: center;
+        justify-content: center;
+        gap: 2rem;
+        padding: 2rem;
+        transition: flex-direction 0.3s ease;
+      }
+
+      .pet-image {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .pet-image img {
+        max-width: 100%;
+        max-height: 80vh;
+        object-fit: contain;
+      }
+
+      .calculator {
+        flex: 1;
+        min-height: 50%;
+        background: white;
+        border-radius: 20px;
+        padding: 2rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      .pet-toggle {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+      }
+
+      .pet-toggle button {
+        flex: 1;
+        padding: 1rem;
+        border: 2px solid #ddd;
+        background: white;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+      }
+
+      .pet-toggle button.active {
+        background: #4f89b1;
+        color: white;
+        border-color: #4f89b1;
+      }
+
+      .pet-toggle button.dog.active {
+        background: #e2b355;
+        border-color: #e2b355;
+      }
+
+      .input-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .input-group label {
+        font-size: 1rem;
+        color: #333;
+        font-weight: bold;
+      }
+
+      .input-group input {
+        padding: 0.8rem;
+        border: 2px solid #ddd;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: border-color 0.3s ease;
+      }
+
+      .input-group input:focus {
+        outline: none;
+        border-color: #4f89b1;
+      }
+
+      .calculate-btn {
+        padding: 1rem;
+        background: #4f89b1;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 1.2rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .calculate-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .back-btn {
+        padding: 1rem;
+        background: #6c757d;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 1.2rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .back-btn:hover {
+        background: #5a6268;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .result {
+        background: #f8f9fa;
+        padding: 1.5rem;
+        border-radius: 10px;
+        text-align: center;
+        min-height: 100px;
+        display: none;
+        flex-direction: column;
+        justify-content: center;
+        gap: 0.5rem;
+      }
+
+      .result.show {
+        display: flex;
+      }
+
+      .result-text {
+        font-size: 1.1rem;
+        color: #333;
+        line-height: 1.6;
+      }
+
+      .result-reaction {
+        font-size: 1rem;
+        color: #4f89b1;
+        font-weight: 500;
+      }
+
+      .info-text {
+        background: #f8f9fa;
+        padding: 1rem;
+        border-radius: 8px;
+        text-align: center;
+      }
+
+      .info-text p {
+        font-size: 0.85rem;
+        color: #666;
+        line-height: 1.6;
+      }
+
+      .info-text a {
+        color: #4f89b1;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s ease;
+      }
+
+      .info-text a:hover {
+        color: #3d6d8f;
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="pet-image">
+        <img id="petImg" src="img/cat.png" alt="寵物圖片" />
+      </div>
+      <div class="calculator">
+        <div class="pet-toggle">
+          <button class="cat active" onclick="togglePet('cat')">🐱 貓貓</button>
+          <button class="dog" onclick="togglePet('dog')">🐶 狗狗</button>
+        </div>
+        <div class="input-group">
+          <label for="petName">寵物名稱</label>
+          <input type="text" id="petName" placeholder="請輸入寵物名稱" />
+        </div>
+        <div class="input-group">
+          <label for="petBirthday">出生日期</label>
+          <input type="date" id="petBirthday" max="9999-12-31" />
+        </div>
+        <button class="calculate-btn" onclick="calculate()">開始計算</button>
+        <button class="back-btn" onclick="location.href='index.html'">
+          返回首頁
+        </button>
+        <div class="result" id="result"></div>
+        <div class="info-text">
+          <p>
+            ※
+            <a
+              href="https://www.edh.tw/article/31725"
+              target="_blank"
+              rel="noopener noreferrer"
+              >年齡換算標準</a
+            >：<br />
+            貓：第1年=15歲，第2年=24歲，之後每年+4歲<br />
+            狗：第1年=15歲，第2年=24歲，之後每年+5歲
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let currentPet = "cat";
+
+      // 限制日期輸入框的年份輸入
+      document.addEventListener("DOMContentLoaded", function () {
+        const dateInput = document.getElementById("petBirthday");
+        dateInput.addEventListener("keydown", function (e) {
+          // 允許特殊按鍵（Tab, Backspace, Delete, 方向鍵等）
+          if (
+            e.key === "Tab" ||
+            e.key === "Backspace" ||
+            e.key === "Delete" ||
+            e.key === "ArrowLeft" ||
+            e.key === "ArrowRight"
+          ) {
+            return;
+          }
+          // 如果不是數字，阻止輸入
+          if (!/^\d$/.test(e.key)) {
+            e.preventDefault();
+          }
+        });
+      });
+
+      function togglePet(petType) {
+        currentPet = petType;
+        const container = document.querySelector(".container");
+        const body = document.body;
+        const petImg = document.getElementById("petImg");
+        const catBtn = document.querySelector(".pet-toggle .cat");
+        const dogBtn = document.querySelector(".pet-toggle .dog");
+        const calculateBtn = document.querySelector(".calculate-btn");
+
+        if (petType === "cat") {
+          container.style.flexDirection = "row-reverse";
+          body.style.backgroundColor = "#4f89b1";
+          petImg.src = "img/cat.png";
+          catBtn.classList.add("active");
+          dogBtn.classList.remove("active");
+          calculateBtn.style.backgroundColor = "#4f89b1";
+          updateReactionColor("#4f89b1");
+        } else {
+          container.style.flexDirection = "row";
+          body.style.backgroundColor = "#e2b355";
+          petImg.src = "img/dog.png";
+          dogBtn.classList.add("active");
+          catBtn.classList.remove("active");
+          calculateBtn.style.backgroundColor = "#e2b355";
+          updateReactionColor("#e2b355");
+        }
+      }
+
+      function updateReactionColor(color) {
+        const reactionElements = document.querySelectorAll(".result-reaction");
+        reactionElements.forEach((el) => {
+          el.style.color = color;
+        });
+      }
+
+      function calculate() {
+        const petName = document.getElementById("petName").value.trim();
+        const petBirthday = document.getElementById("petBirthday").value;
+        const resultDiv = document.getElementById("result");
+
+        if (!petName) {
+          alert("請輸入名稱");
+          return;
+        }
+
+        if (!petBirthday) {
+          alert("請選擇日期");
+          return;
+        }
+
+        const birthDate = new Date(petBirthday);
+        const today = new Date();
+        const ageInDays = Math.floor(
+          (today - birthDate) / (1000 * 60 * 60 * 24)
+        );
+        const petAge = (ageInDays / 365).toFixed(1);
+
+        let humanAge;
+        if (currentPet === "dog") {
+          if (ageInDays <= 365) {
+            humanAge = Math.floor((ageInDays / 365) * 15);
+          } else if (ageInDays <= 730) {
+            humanAge = Math.floor(15 + ((ageInDays - 365) / 365) * 9);
+          } else {
+            humanAge = Math.floor(24 + ((ageInDays - 730) / 365) * 5);
+          }
+        } else {
+          if (ageInDays <= 365) {
+            humanAge = Math.floor((ageInDays / 365) * 15);
+          } else if (ageInDays <= 730) {
+            humanAge = Math.floor(15 + ((ageInDays - 365) / 365) * 9);
+          } else {
+            humanAge = Math.floor(24 + ((ageInDays - 730) / 365) * 4);
+          }
+        }
+
+        const petTypeText = currentPet === "cat" ? "貓" : "狗";
+        const reaction = getReaction(humanAge);
+        const reactionColor = currentPet === "cat" ? "#4f89b1" : "#e2b355";
+
+        resultDiv.innerHTML = `
+                <div class="result-text">
+                    ${petName}的${petTypeText}齡是 ${petAge} 歲<br>
+                    換算成人類已經 ${humanAge} 歲了!
+                </div>
+                <div class="result-reaction" style="color: ${reactionColor};">${reaction}</div>
+            `;
+        resultDiv.classList.add("show");
+      }
+
+      function getReaction(humanAge) {
+        if (humanAge < 1) {
+          return "還是個小寶寶呢！要好好照顧喔～";
+        } else if (humanAge < 10) {
+          return "正值活潑好動的年紀，充滿好奇心！";
+        } else if (humanAge < 20) {
+          return "青春期的叛逆少年，精力旺盛！";
+        } else if (humanAge < 40) {
+          return "正值壯年，是最有活力的時期！";
+        } else if (humanAge < 60) {
+          return "成熟穩重，經驗豐富的中年時期。";
+        } else if (humanAge < 80) {
+          return "進入老年了，要更加細心照顧喔！";
+        } else {
+          return "已經是高齡長者了，請給予更多的關愛與照護！";
+        }
+      }
+    </script>
+  </body>
+</html>
