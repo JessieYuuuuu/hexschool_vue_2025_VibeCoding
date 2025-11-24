@@ -13,13 +13,18 @@
         align-items: center;
       }
       div {
+        display: flex;
+      }
+      .contentBox {
         background: #fff;
         height: 50vh;
         width: 50vw;
-        display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
+      }
+      .linkBox {
+        gap: 1rem;
       }
       p {
         font-size: 2rem;
@@ -32,9 +37,12 @@
     </style>
   </head>
   <body>
-    <div>
+    <div class="contentBox">
       <p>2025 Vibe Coding 公益程式體驗營</p>
-      <a href="./PetAgeCalculator.html">寵物年齡計算機</a>
+      <div class="linkBox">
+        <a href="./PetAgeCalculator.html">寵物年齡計算機</a>
+        <a href="./Future3cStore.html">小杰 3C 館</a>
+      </div>
     </div>
   </body>
 </html>
