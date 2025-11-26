@@ -152,6 +152,46 @@
         font-weight: bold;
       }
 
+      /* Logo 樣式 */
+      .logo {
+        max-width: 300px;
+        height: auto;
+        margin: 0 auto 20px;
+        display: block;
+        filter: drop-shadow(0 0 20px var(--neon-color));
+        transition: all 0.3s;
+      }
+
+      /* 顏色切換器 */
+      .color-switcher {
+        display: flex;
+        gap: 8px;
+        justify-content: center;
+        margin: 15px 0;
+        flex-wrap: wrap;
+      }
+
+      .color-btn {
+        width: 28px;
+        height: 28px;
+        border: 2px solid #333;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: all 0.3s;
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+      }
+
+      .color-btn:hover {
+        transform: scale(1.1);
+        box-shadow: 0 0 15px currentColor;
+      }
+
+      .color-btn.active {
+        border-color: #fff;
+        box-shadow: 0 0 15px currentColor, 0 0 30px currentColor;
+        transform: scale(1.15);
+      }
+
       /* 返回首頁按鈕 */
       .back-btn {
         padding: 10px 24px;
@@ -180,7 +220,132 @@
   <body>
     <div class="container">
       <header>
-        <h1>小杰 3C 館</h1>
+        <!-- Inline SVG Logo -->
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="440"
+          height="140"
+          viewBox="0 0 440 140"
+          class="logo"
+        >
+          <defs>
+            <style>
+              .logo-mono {
+                fill: none;
+                stroke: var(--neon-color);
+                stroke-width: 3;
+                stroke-linecap: round;
+                stroke-linejoin: round;
+              }
+              .logo-text {
+                fill: var(--neon-color);
+                font-family: "Orbitron", sans-serif;
+                letter-spacing: 4px;
+              }
+              .logo-sub {
+                fill: var(--neon-color);
+                font-family: "Roboto", sans-serif;
+                letter-spacing: 3px;
+              }
+              .logo-solid {
+                fill: var(--neon-color);
+              }
+            </style>
+          </defs>
+          <rect
+            x="12"
+            y="12"
+            width="416"
+            height="116"
+            rx="18"
+            class="logo-mono"
+          />
+          <g transform="translate(32,32)">
+            <path
+              class="logo-mono"
+              d="M10 10 h45 v10 h-35 v14 h28 v10 h-28 v16"
+            />
+            <path class="logo-mono" d="M18 10 v60" />
+            <circle class="logo-solid" cx="55" cy="20" r="3" />
+            <circle class="logo-solid" cx="48" cy="34" r="3" />
+            <circle class="logo-solid" cx="48" cy="56" r="3" />
+            <path class="logo-mono" d="M65 18 h20" />
+            <path class="logo-mono" d="M65 38 h30" />
+            <path class="logo-mono" d="M65 58 h20" />
+            <circle class="logo-solid" cx="90" cy="18" r="3" />
+            <circle class="logo-solid" cx="100" cy="38" r="3" />
+            <circle class="logo-solid" cx="90" cy="58" r="3" />
+          </g>
+          <g transform="translate(150,60)">
+            <text x="0" y="0" font-size="34" class="logo-text">FUTURE 3C</text>
+            <text x="2" y="28" font-size="13" class="logo-sub">TECH STORE</text>
+          </g>
+        </svg>
+
+        <!-- 顏色切換按鈕 -->
+        <div class="color-switcher">
+          <button
+            class="color-btn active"
+            data-color="#00f3ff"
+            style="background: #00f3ff"
+            title="霓虹藍"
+          ></button>
+          <button
+            class="color-btn"
+            data-color="#ff00ff"
+            style="background: #ff00ff"
+            title="霓虹紫"
+          ></button>
+          <button
+            class="color-btn"
+            data-color="#00ff88"
+            style="background: #00ff88"
+            title="霓虹綠"
+          ></button>
+          <button
+            class="color-btn"
+            data-color="#ff3366"
+            style="background: #ff3366"
+            title="霓虹粉"
+          ></button>
+          <button
+            class="color-btn"
+            data-color="#ffaa00"
+            style="background: #ffaa00"
+            title="霓虹橙"
+          ></button>
+          <button
+            class="color-btn"
+            data-color="#ffff00"
+            style="background: #ffff00"
+            title="霓虹黃"
+          ></button>
+          <button
+            class="color-btn"
+            data-color="#ff0066"
+            style="background: #ff0066"
+            title="霓虹紅"
+          ></button>
+          <button
+            class="color-btn"
+            data-color="#00ffff"
+            style="background: #00ffff"
+            title="霓虹青"
+          ></button>
+          <button
+            class="color-btn"
+            data-color="#9d00ff"
+            style="background: #9d00ff"
+            title="霓虹紫羅蘭"
+          ></button>
+          <button
+            class="color-btn"
+            data-color="#ffffff"
+            style="background: #ffffff"
+            title="霓虹白"
+          ></button>
+        </div>
+
         <p>探索未來科技產品</p>
         <button class="back-btn" onclick="location.href='index.html'">
           ← 返回首頁
@@ -320,7 +485,50 @@
           app.innerHTML += html;
         });
       }
+
+      // === 顏色切換功能 ===
+      function setupColorSwitcher() {
+        const colorBtns = document.querySelectorAll(".color-btn");
+
+        colorBtns.forEach((btn) => {
+          btn.addEventListener("click", function () {
+            const newColor = this.dataset.color;
+
+            // 更新 active 狀態
+            colorBtns.forEach((b) => b.classList.remove("active"));
+            this.classList.add("active");
+
+            // 更新 CSS 變數（logo 會自動跟著變）
+            document.documentElement.style.setProperty(
+              "--neon-color",
+              newColor
+            );
+
+            // 儲存選擇的顏色到 localStorage
+            localStorage.setItem("themeColor", newColor);
+          });
+        });
+
+        // 載入儲存的顏色
+        const savedColor = localStorage.getItem("themeColor");
+        if (savedColor) {
+          document.documentElement.style.setProperty(
+            "--neon-color",
+            savedColor
+          );
+
+          // 設定對應按鈕為 active
+          colorBtns.forEach((btn) => {
+            if (btn.dataset.color === savedColor) {
+              colorBtns.forEach((b) => b.classList.remove("active"));
+              btn.classList.add("active");
+            }
+          });
+        }
+      }
+
       init();
+      setupColorSwitcher();
     </script>
   </body>
 </html>

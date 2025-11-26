@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="140" viewBox="0 0 420 140">
+  <!-- 動態顏色科幻風 FUTURE 3C LOGO -->
+  <defs>
+    <style>
+      .mono {
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 3;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+      .text {
+        fill: currentColor;
+        font-family: "Orbitron", sans-serif;
+        letter-spacing: 4px;
+      }
+      .sub {
+        fill: currentColor;
+        font-family: "Roboto", sans-serif;
+        letter-spacing: 3px;
+      }
+      .solid {
+        fill: currentColor;
+      }
+    </style>
+  </defs>
+  <!-- 外框（霓虹科幻） -->
+  <rect x="12" y="12" width="396" height="116" rx="18" class="mono" />
+  <!-- 科幻線條圖示（抽象電路 + 未來感 F3C） -->
+  <g transform="translate(32,32)">
+    <!-- F 的骨架 -->
+    <path class="mono" d="M10 10 h45 v10 h-35 v14 h28 v10 h-28 v16" />
+    <path class="mono" d="M18 10 v60" />
+    <!-- 電路節點 -->
+    <circle class="solid" cx="55" cy="20" r="3" />
+    <circle class="solid" cx="48" cy="34" r="3" />
+    <circle class="solid" cx="48" cy="56" r="3" />
+    <!-- 右側抽象 3C 電路延伸 -->
+    <path class="mono" d="M65 18 h20" />
+    <path class="mono" d="M65 38 h30" />
+    <path class="mono" d="M65 58 h20" />
+    <circle class="solid" cx="90" cy="18" r="3" />
+    <circle class="solid" cx="100" cy="38" r="3" />
+    <circle class="solid" cx="90" cy="58" r="3" />
+  </g>
+  <!-- 文字 FUTURE 3C -->
+  <g transform="translate(150,60)">
+    <text x="0" y="0" font-size="34" class="text">FUTURE 3C</text>
+    <text x="2" y="28" font-size="13" class="sub">TECH STORE</text>
+  </g>
+</svg>
