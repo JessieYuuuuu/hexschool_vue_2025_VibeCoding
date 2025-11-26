@@ -214,6 +214,60 @@
         box-shadow: 0 0 20px rgba(0, 243, 255, 0.6);
         transform: translateY(-2px);
       }
+
+      /* TAB 切換樣式 */
+      .tab-bar {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 30px;
+        border-bottom: 2px solid #333;
+      }
+
+      .tab-btn {
+        padding: 12px 30px;
+        border: none;
+        background: transparent;
+        color: #888;
+        cursor: pointer;
+        font-size: 1rem;
+        font-family: "Orbitron", sans-serif;
+        letter-spacing: 1px;
+        transition: all 0.3s;
+        border-bottom: 3px solid transparent;
+        margin-bottom: -2px;
+      }
+
+      .tab-btn:hover {
+        color: var(--neon-color);
+      }
+
+      .tab-btn.active {
+        color: var(--neon-color);
+        border-bottom-color: var(--neon-color);
+        text-shadow: 0 0 10px var(--neon-color);
+      }
+
+      .tab-content {
+        display: none;
+      }
+
+      .tab-content.active {
+        display: block;
+      }
+
+      /* 流程圖容器 */
+      .flowchart-container {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 20px 0;
+      }
+
+      .flowchart-container svg {
+        max-width: 100%;
+        height: auto;
+        filter: drop-shadow(0 0 10px rgba(0, 243, 255, 0.2));
+      }
     </style>
   </head>
 
@@ -304,8 +358,8 @@
           ></button>
           <button
             class="color-btn"
-            data-color="#ff3366"
-            style="background: #ff3366"
+            data-color="#ff69b4"
+            style="background: #ff69b4"
             title="霓虹粉"
           ></button>
           <button
@@ -322,15 +376,15 @@
           ></button>
           <button
             class="color-btn"
-            data-color="#ff0066"
-            style="background: #ff0066"
+            data-color="#ff0000"
+            style="background: #ff0000"
             title="霓虹紅"
           ></button>
           <button
             class="color-btn"
-            data-color="#00ffff"
-            style="background: #00ffff"
-            title="霓虹青"
+            data-color="#00ff00"
+            style="background: #00ff00"
+            title="霓虹萊姆綠"
           ></button>
           <button
             class="color-btn"
@@ -352,18 +406,160 @@
         </button>
       </header>
 
-      <div class="filter-bar">
-        <span class="filter-label">價格篩選：</span>
-        <button class="filter-btn active" data-filter="all">全部顯示</button>
-        <button class="filter-btn" data-filter="low">$10,000 以下</button>
-        <button class="filter-btn" data-filter="mid">$10,000 - $30,000</button>
-        <button class="filter-btn" data-filter="high">$30,000 以上</button>
+      <!-- TAB 切換按鈕 -->
+      <div class="tab-bar">
+        <button class="tab-btn active" data-tab="products">商品展示</button>
+        <button class="tab-btn" data-tab="flowchart">網站流程圖</button>
       </div>
 
-      <div id="app" class="grid">
-        <div class="msg-box">
-          <h2>⏳ 倉庫連線中...</h2>
-          <p>如果很久沒反應，請檢查你的 CSV 網址是否正確</p>
+      <!-- TAB 內容區 -->
+      <div id="tab-products" class="tab-content active">
+        <div class="filter-bar">
+          <span class="filter-label">價格篩選：</span>
+          <button class="filter-btn active" data-filter="all">全部顯示</button>
+          <button class="filter-btn" data-filter="low">$10,000 以下</button>
+          <button class="filter-btn" data-filter="mid">
+            $10,000 - $30,000
+          </button>
+          <button class="filter-btn" data-filter="high">$30,000 以上</button>
+        </div>
+
+        <div id="app" class="grid">
+          <div class="msg-box">
+            <h2>⏳ 倉庫連線中...</h2>
+            <p>如果很久沒反應，請檢查你的 CSV 網址是否正確</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="tab-flowchart" class="tab-content">
+        <div class="flowchart-container">
+          <svg width="900" height="600" viewBox="0 0 900 600">
+            <defs>
+              <marker
+                id="arrowhead"
+                markerWidth="10"
+                markerHeight="10"
+                refX="6"
+                refY="3"
+                orient="auto"
+              >
+                <polygon points="0 0, 6 3, 0 6" fill="var(--neon-color)" />
+              </marker>
+              <style>
+                .flow-box {
+                  stroke: var(--neon-color);
+                  fill: none;
+                  stroke-width: 2;
+                  rx: 6;
+                }
+                .flow-text {
+                  fill: var(--neon-color);
+                  font-size: 14px;
+                  font-family: "Roboto", sans-serif;
+                }
+                .flow-arrow {
+                  stroke: var(--neon-color);
+                  stroke-width: 2;
+                  marker-end: url(#arrowhead);
+                }
+              </style>
+            </defs>
+
+            <!-- 外部 API -->
+            <rect class="flow-box" x="50" y="40" width="200" height="60" />
+            <text class="flow-text" x="150" y="70" text-anchor="middle">
+              Google Sheet CSV API
+            </text>
+            <text class="flow-text" x="150" y="87" text-anchor="middle">
+              (Papa.parse)
+            </text>
+
+            <!-- init() -->
+            <rect class="flow-box" x="350" y="40" width="180" height="60" />
+            <text class="flow-text" x="440" y="70" text-anchor="middle">
+              init()
+            </text>
+            <text class="flow-text" x="440" y="87" text-anchor="middle">
+              下載 CSV + 呼叫 render
+            </text>
+
+            <!-- renderCards -->
+            <rect class="flow-box" x="650" y="40" width="200" height="60" />
+            <text class="flow-text" x="750" y="70" text-anchor="middle">
+              renderCards()
+            </text>
+            <text class="flow-text" x="750" y="87" text-anchor="middle">
+              商品卡 DOM 生成
+            </text>
+
+            <!-- arrows 第一層 -->
+            <line class="flow-arrow" x1="250" y1="70" x2="350" y2="70" />
+            <line class="flow-arrow" x1="530" y1="70" x2="650" y2="70" />
+
+            <!-- Filter Buttons -->
+            <rect class="flow-box" x="50" y="180" width="230" height="80" />
+            <text class="flow-text" x="165" y="215" text-anchor="middle">
+              setupFilterButtons()
+            </text>
+            <text class="flow-text" x="165" y="235" text-anchor="middle">
+              .addEventListener(click)
+            </text>
+
+            <!-- filterAndRender -->
+            <rect class="flow-box" x="350" y="180" width="200" height="80" />
+            <text class="flow-text" x="450" y="215" text-anchor="middle">
+              filterAndRender()
+            </text>
+            <text class="flow-text" x="450" y="235" text-anchor="middle">
+              依價格區間過濾資料
+            </text>
+
+            <!-- Render Cards 區塊 -->
+            <rect class="flow-box" x="650" y="180" width="200" height="80" />
+            <text class="flow-text" x="750" y="215" text-anchor="middle">
+              renderCards()
+            </text>
+            <text class="flow-text" x="750" y="235" text-anchor="middle">
+              重新渲染 DOM
+            </text>
+
+            <!-- arrows 第二層 -->
+            <line class="flow-arrow" x1="280" y1="220" x2="350" y2="220" />
+            <line class="flow-arrow" x1="550" y1="220" x2="650" y2="220" />
+
+            <!-- Color Switcher -->
+            <rect class="flow-box" x="50" y="340" width="230" height="80" />
+            <text class="flow-text" x="165" y="375" text-anchor="middle">
+              setupColorSwitcher()
+            </text>
+            <text class="flow-text" x="165" y="395" text-anchor="middle">
+              切換 CSS 變數
+            </text>
+
+            <!-- LocalStorage Flow -->
+            <rect class="flow-box" x="350" y="340" width="240" height="80" />
+            <text class="flow-text" x="470" y="375" text-anchor="middle">
+              localStorage
+            </text>
+            <text class="flow-text" x="470" y="395" text-anchor="middle">
+              儲存 / 載入主題色
+            </text>
+            <line class="flow-arrow" x1="280" y1="380" x2="350" y2="380" />
+
+            <!-- DOM Output 區域 -->
+            <rect class="flow-box" x="650" y="330" width="200" height="120" />
+            <text class="flow-text" x="750" y="365" text-anchor="middle">
+              #app DOM
+            </text>
+            <text class="flow-text" x="750" y="385" text-anchor="middle">
+              grid 卡片區
+            </text>
+            <text class="flow-text" x="750" y="405" text-anchor="middle">
+              (renderCards 生成)
+            </text>
+            <line class="flow-arrow" x1="590" y1="380" x2="650" y2="380" />
+          </svg>
         </div>
       </div>
     </div>
@@ -527,8 +723,29 @@
         }
       }
 
+      // === TAB 切換功能 ===
+      function setupTabs() {
+        const tabBtns = document.querySelectorAll(".tab-btn");
+        const tabContents = document.querySelectorAll(".tab-content");
+
+        tabBtns.forEach((btn) => {
+          btn.addEventListener("click", function () {
+            const targetTab = this.dataset.tab;
+
+            // 移除所有 active 狀態
+            tabBtns.forEach((b) => b.classList.remove("active"));
+            tabContents.forEach((c) => c.classList.remove("active"));
+
+            // 加上當前 active 狀態
+            this.classList.add("active");
+            document.getElementById(`tab-${targetTab}`).classList.add("active");
+          });
+        });
+      }
+
       init();
       setupColorSwitcher();
+      setupTabs();
     </script>
   </body>
 </html>
