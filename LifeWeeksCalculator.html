@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="./img/LifeWeekIcon.png" />
+    <link rel="apple-touch-icon" href="./img/LifeWeekIcon.png" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="./img/LifeWeekIcon.png"
+    />
+
+    <title>人生計算器</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        overflow: hidden;
+      }
+
+      .header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 30px;
+        text-align: center;
+      }
+
+      .header h1 {
+        font-size: 2rem;
+        margin-bottom: 10px;
+      }
+
+      .header p {
+        opacity: 0.9;
+        font-size: 0.95rem;
+      }
+
+      .content {
+        padding: 30px;
+      }
+
+      .input-section {
+        background: #f8f9fa;
+        padding: 25px;
+        border-radius: 15px;
+        margin-bottom: 30px;
+      }
+
+      .input-group {
+        margin-bottom: 20px;
+      }
+
+      .input-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #333;
+      }
+
+      .input-group input {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: border-color 0.3s;
+      }
+
+      .input-group input:focus {
+        outline: none;
+        border-color: #667eea;
+      }
+
+      .toggle-section {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+      }
+
+      .toggle-btn {
+        flex: 1;
+        min-width: 150px;
+        min-height: 80px;
+        padding: 12px 20px;
+        border: 2px solid #667eea;
+        background: white;
+        color: #667eea;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1rem;
+        font-weight: 600;
+        transition: all 0.3s;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .toggle-btn.active {
+        background: #667eea;
+        color: white;
+      }
+
+      .toggle-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+      }
+
+      .stats-section {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+      }
+
+      .stat-card {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 25px;
+        border-radius: 15px;
+        text-align: center;
+      }
+
+      .stat-card h3 {
+        font-size: 0.9rem;
+        opacity: 0.9;
+        margin-bottom: 10px;
+      }
+
+      .stat-card .number {
+        font-size: 2.5rem;
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+
+      .stat-card .label {
+        font-size: 0.85rem;
+        opacity: 0.8;
+      }
+
+      .stat-card.days {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      }
+
+      .stat-card.progress {
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      }
+
+      .message-box {
+        background: #fff3cd;
+        border-left: 4px solid #ffc107;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 30px;
+        font-size: 1.1rem;
+        line-height: 1.6;
+        color: #856404;
+      }
+
+      .calendar-grid {
+        display: grid;
+        grid-template-columns: repeat(52, 1fr);
+        gap: 3px;
+        margin-top: 20px;
+      }
+
+      .week-cell {
+        aspect-ratio: 1;
+        border-radius: 2px;
+        transition: transform 0.2s;
+      }
+
+      .week-cell:hover {
+        transform: scale(1.5);
+        z-index: 10;
+      }
+
+      .week-cell.passed {
+        background: #667eea;
+      }
+
+      .week-cell.remaining {
+        background: #e0e0e0;
+      }
+
+      @media (max-width: 768px) {
+        .header h1 {
+          font-size: 1.5rem;
+        }
+
+        .content {
+          padding: 20px;
+        }
+
+        .input-section {
+          padding: 20px;
+        }
+
+        .stat-card .number {
+          font-size: 2rem;
+        }
+
+        .calendar-grid {
+          grid-template-columns: repeat(26, 1fr);
+          gap: 2px;
+        }
+
+        .toggle-section {
+          flex-direction: column;
+        }
+
+        .toggle-btn {
+          min-width: 100%;
+        }
+      }
+
+      @media (max-width: 480px) {
+        body {
+          padding: 10px;
+        }
+
+        .header {
+          padding: 20px;
+        }
+
+        .calendar-grid {
+          grid-template-columns: repeat(13, 1fr);
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>🕐 人生計算器</h1>
+        <p>每一週都是獨特的故事</p>
+      </div>
+
+      <div class="content">
+        <div class="input-section">
+          <div class="input-group">
+            <label for="nickname">暱稱</label>
+            <input
+              type="text"
+              id="nickname"
+              placeholder="請輸入你的暱稱"
+              value="旅人"
+            />
+          </div>
+
+          <div class="input-group">
+            <label for="birthDate">出生日期</label>
+            <input type="date" id="birthDate" max="9999-12-31" />
+          </div>
+
+          <div class="input-group">
+            <label for="targetAge">預期壽命（歲）</label>
+            <input type="number" id="targetAge" min="1" max="120" value="80" />
+          </div>
+
+          <div class="toggle-section">
+            <button class="toggle-btn active" data-mode="full">
+              ☑ 含睡眠（全部週數）
+            </button>
+            <button class="toggle-btn" data-mode="awake">
+              ☑ 不含睡眠（清醒週）
+              <span
+                style="
+                  display: block;
+                  font-size: 0.75rem;
+                  font-weight: normal;
+                  margin-top: 4px;
+                "
+                >扣除 1/3 睡眠時間</span
+              >
+            </button>
+          </div>
+        </div>
+
+        <div class="message-box" id="messageBox">請輸入你的資料開始計算</div>
+
+        <div class="stats-section" id="statsSection"></div>
+
+        <div class="calendar-grid" id="calendarGrid"></div>
+      </div>
+    </div>
+
+    <script>
+      // 常數定義
+      const MS_PER_DAY = 1000 * 60 * 60 * 24;
+      const MS_PER_WEEK = MS_PER_DAY * 7;
+
+      // 勵志語句庫
+      const messages = {
+        youth: [
+          "{nickname}，你的世界還在展開，這些週只是序章。",
+          "你正在建立人生的底層架構，{nickname}，節奏不急。",
+          "每一週都在為未來的你打基礎，{nickname}。",
+          "年輕就是最大的資本，好好運用這些週數，{nickname}。",
+          "這些週數是你探索世界的起點，{nickname}。",
+          "{nickname}，你還有無限可能等待發掘。",
+          "別急著定義自己，{nickname}，讓時間慢慢雕琢。",
+          "每個錯誤都是成長的養分，{nickname}。",
+          "{nickname}，現在的迷茫是正常的，繼續前進就對了。",
+          "你的故事才剛開始，{nickname}，精彩還在後頭。",
+          "這個年紀最適合大膽嘗試，{nickname}。",
+          "{nickname}，不要害怕失敗，它們都是經驗值。",
+          "你擁有最珍貴的資源——時間，{nickname}。",
+          "每一週的學習都在累積你的競爭力，{nickname}。",
+          "{nickname}，保持好奇心，世界比你想像的更大。",
+          "現在建立的習慣會影響你一輩子，{nickname}。",
+          "你的潛力還沒被完全開發，{nickname}。",
+          "{nickname}，享受這段可以盡情試錯的時光。",
+          "別被他人的期待束縛，{nickname}，走自己的路。",
+          "這些週數是你打造夢想的原料，{nickname}。",
+        ],
+        young: [
+          "{nickname}，這是你最具爆發力的階段，每一週都能是轉折點。",
+          "保持長期主動權，你的週數還有巨大伸展性，{nickname}。",
+          "現在的每一週投資，都會在未來開花結果，{nickname}。",
+          "你正處於人生的黃金時期，把握每一週，{nickname}。",
+          "{nickname}，這個階段的選擇會定義你的未來十年。",
+          "你已經不再是新手，{nickname}，是時候展現實力了。",
+          "每一週的努力都在為你的理想鋪路，{nickname}。",
+          "{nickname}，你的經驗和活力正處於最佳平衡點。",
+          "這是建立事業和家庭的關鍵時期，{nickname}。",
+          "別讓忙碌掩蓋了生活的意義，{nickname}。",
+          "{nickname}，你的決策開始產生長遠影響了。",
+          "保持學習的熱情，{nickname}，世界變化很快。",
+          "這些週數是你累積財富和智慧的黃金期，{nickname}。",
+          "{nickname}，平衡工作與生活，兩者都很重要。",
+          "你的人脈和資源正在快速累積，{nickname}。",
+          "每一週都是投資自己的機會，{nickname}。",
+          "{nickname}，不要忘記照顧自己的身心健康。",
+          "這個階段的堅持會帶來巨大回報，{nickname}。",
+          "你正在成為更好的自己，{nickname}。",
+          "{nickname}，記得偶爾停下來欣賞沿途風景。",
+        ],
+        middle: [
+          "{nickname}，你已累積了堅實基礎，接下來是收斂與突破的階段。",
+          "你的經驗正在轉換成真正的力量，{nickname}。",
+          "這個階段的每一週都更有價值和深度，{nickname}。",
+          "你已經走過了許多，接下來是收穫的時刻，{nickname}。",
+          "{nickname}，你的智慧已經超越了單純的知識。",
+          "這些年的積累讓你更懂得取捨，{nickname}。",
+          "你開始理解什麼才是真正重要的，{nickname}。",
+          "{nickname}，你的影響力正在擴大。",
+          "這個階段適合傳承和指導他人，{nickname}。",
+          "你的經驗是年輕人的寶貴資源，{nickname}。",
+          "{nickname}，你已經證明了自己的價值。",
+          "現在是享受成果的時候了，{nickname}。",
+          "你的判斷力已經爐火純青，{nickname}。",
+          "{nickname}，你知道如何在複雜中找到簡單。",
+          "這些週數見證了你的成長和蛻變，{nickname}。",
+          "你的穩定來自於多年的努力，{nickname}。",
+          "{nickname}，你已經建立了屬於自己的人生節奏。",
+          "這個階段適合深化而非擴張，{nickname}。",
+          "你的人生經驗是無法複製的資產，{nickname}。",
+          "{nickname}，你已經學會了與自己和解。",
+        ],
+        senior: [
+          "{nickname}，你已跨過無數艱難週期，這本身就是值得肯定的故事。",
+          "你走過的每週都在塑造現在的穩定與智慧，{nickname}。",
+          "你的人生經驗是無價的寶藏，{nickname}。",
+          "每一週都見證了你的堅韌與智慧，{nickname}。",
+          "{nickname}，你的存在本身就是一部活歷史。",
+          "這些年的風雨讓你更加從容，{nickname}。",
+          "你已經看透了許多人生的真相，{nickname}。",
+          "{nickname}，你的平靜來自於深刻的理解。",
+          "你的故事值得被記錄和傳承，{nickname}。",
+          "這個年紀的每一天都是禮物，{nickname}。",
+          "{nickname}，你已經完成了許多人無法完成的事。",
+          "你的智慧是時間的結晶，{nickname}。",
+          "你見證了時代的變遷，{nickname}。",
+          "{nickname}，你的人生已經足夠精彩。",
+          "這些週數記錄了你的勇氣和堅持，{nickname}。",
+          "你的經歷是後輩的指路明燈，{nickname}。",
+          "{nickname}，你已經贏得了安詳的權利。",
+          "你的人生是一本值得細讀的書，{nickname}。",
+          "每一個皺紋都是歲月的勳章，{nickname}。",
+          "{nickname}，你的存在讓世界更加豐富。",
+        ],
+      };
+
+      // 取得隨機訊息
+      const getRandomMessage = (age, nickname) => {
+        let category;
+        if (age <= 17) category = "youth";
+        else if (age <= 40) category = "young";
+        else if (age <= 65) category = "middle";
+        else category = "senior";
+
+        const messageList = messages[category];
+        const randomMsg =
+          messageList[Math.floor(Math.random() * messageList.length)];
+        return randomMsg.replace("{nickname}", nickname);
+      };
+
+      // 計算週數和天數
+      const calculateWeeks = (birthDate, targetAge, displayMode) => {
+        const today = new Date();
+        const birth = new Date(birthDate);
+        const endDate = new Date(birth);
+        endDate.setFullYear(birth.getFullYear() + parseInt(targetAge));
+
+        const totalWeeks = Math.floor((endDate - birth) / MS_PER_WEEK);
+        const passedWeeks = Math.floor((today - birth) / MS_PER_WEEK);
+        const remainingWeeks = totalWeeks - passedWeeks;
+
+        // 計算天數
+        const totalDays = Math.floor((endDate - birth) / MS_PER_DAY);
+        const passedDays = Math.floor((today - birth) / MS_PER_DAY);
+        const remainingDays = totalDays - passedDays;
+
+        let result = {
+          total: totalWeeks,
+          passed: passedWeeks,
+          remaining: remainingWeeks,
+          totalDays: totalDays,
+          passedDays: passedDays,
+          remainingDays: remainingDays,
+          percentage: ((passedWeeks / totalWeeks) * 100).toFixed(1),
+        };
+
+        if (displayMode === "awake") {
+          result = {
+            total: Math.floor(totalWeeks * (2 / 3)),
+            passed: Math.floor(passedWeeks * (2 / 3)),
+            remaining: Math.floor(remainingWeeks * (2 / 3)),
+            totalDays: Math.floor(totalDays * (2 / 3)),
+            passedDays: Math.floor(passedDays * (2 / 3)),
+            remainingDays: Math.floor(remainingDays * (2 / 3)),
+            percentage: ((passedWeeks / totalWeeks) * 100).toFixed(1),
+          };
+        }
+
+        return result;
+      };
+
+      // 渲染統計卡片
+      const renderStats = (stats) => {
+        const statsSection = document.getElementById("statsSection");
+        statsSection.innerHTML = `
+          <div class="stat-card">
+            <h3>已走過</h3>
+            <div class="number">${stats.passed.toLocaleString()}</div>
+            <div class="label">週</div>
+          </div>
+          <div class="stat-card">
+            <h3>剩餘</h3>
+            <div class="number">${stats.remaining.toLocaleString()}</div>
+            <div class="label">週</div>
+          </div>
+          <div class="stat-card days">
+            <h3>已走過</h3>
+            <div class="number">${stats.passedDays.toLocaleString()}</div>
+            <div class="label">天</div>
+          </div>
+          <div class="stat-card days">
+            <h3>剩餘</h3>
+            <div class="number">${stats.remainingDays.toLocaleString()}</div>
+            <div class="label">天</div>
+          </div>
+          <div class="stat-card progress">
+            <h3>人生進度</h3>
+            <div class="number">${stats.percentage}%</div>
+            <div class="label">已完成</div>
+          </div>
+        `;
+      };
+
+      // 渲染日曆格子
+      const renderCalendar = (stats) => {
+        const calendarGrid = document.getElementById("calendarGrid");
+        calendarGrid.innerHTML = "";
+
+        for (let i = 0; i < stats.total; i++) {
+          const cell = document.createElement("div");
+          cell.className = `week-cell ${
+            i < stats.passed ? "passed" : "remaining"
+          }`;
+          cell.title = `第 ${i + 1} 週`;
+          calendarGrid.appendChild(cell);
+        }
+      };
+
+      // 儲存到 localStorage
+      const saveToLocalStorage = (data) => {
+        localStorage.setItem("lifeWeeksData", JSON.stringify(data));
+      };
+
+      // 從 localStorage 載入
+      const loadFromLocalStorage = () => {
+        const data = localStorage.getItem("lifeWeeksData");
+        return data ? JSON.parse(data) : null;
+      };
+
+      // 更新計算
+      const updateCalculation = () => {
+        const nickname = document.getElementById("nickname").value || "旅人";
+        const birthDate = document.getElementById("birthDate").value;
+        const targetAge = document.getElementById("targetAge").value;
+        const displayMode =
+          document.querySelector(".toggle-btn.active").dataset.mode;
+
+        if (!birthDate) {
+          document.getElementById("messageBox").textContent =
+            "請輸入你的出生日期";
+          return;
+        }
+
+        // 儲存資料
+        saveToLocalStorage({ nickname, birthDate, targetAge, displayMode });
+
+        // 計算週數
+        const stats = calculateWeeks(birthDate, targetAge, displayMode);
+
+        // 計算年齡
+        const today = new Date();
+        const birth = new Date(birthDate);
+        const age = today.getFullYear() - birth.getFullYear();
+
+        // 顯示訊息
+        const message = getRandomMessage(age, nickname);
+        document.getElementById("messageBox").textContent = message;
+
+        // 渲染結果
+        renderStats(stats);
+        renderCalendar(stats);
+      };
+
+      // 初始化
+      const init = () => {
+        // 載入儲存的資料
+        const savedData = loadFromLocalStorage();
+        if (savedData) {
+          document.getElementById("nickname").value =
+            savedData.nickname || "旅人";
+          document.getElementById("birthDate").value =
+            savedData.birthDate || "";
+          document.getElementById("targetAge").value =
+            savedData.targetAge || 80;
+
+          // 設定顯示模式
+          document.querySelectorAll(".toggle-btn").forEach((btn) => {
+            btn.classList.remove("active");
+            if (btn.dataset.mode === savedData.displayMode) {
+              btn.classList.add("active");
+            }
+          });
+        }
+
+        // 綁定事件
+        document
+          .getElementById("nickname")
+          .addEventListener("input", updateCalculation);
+        document
+          .getElementById("birthDate")
+          .addEventListener("change", updateCalculation);
+        document
+          .getElementById("targetAge")
+          .addEventListener("input", updateCalculation);
+
+        document.querySelectorAll(".toggle-btn").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            document
+              .querySelectorAll(".toggle-btn")
+              .forEach((b) => b.classList.remove("active"));
+            btn.classList.add("active");
+            updateCalculation();
+          });
+        });
+
+        // 初始計算
+        if (savedData && savedData.birthDate) {
+          updateCalculation();
+        }
+      };
+
+      // 啟動
+      init();
+    </script>
+  </body>
+</html>
