@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- SEO 基本標籤 -->
+    <title>蝦皮賣家利潤計算機 | 免費線上計算工具 - 支援2026新制度</title>
+    <meta
+      name="description"
+      content="免費蝦皮賣家利潤計算機，支援多件優惠、大促活動費率計算。一鍵計算單件淨利、訂單總利潤，支援2026年新制度比較。適合蝦皮賣家、電商創業者使用。"
+    />
+    <meta
+      name="keywords"
+      content="蝦皮利潤計算,蝦皮賣家工具,電商利潤計算機,蝦皮費率計算,網拍利潤試算,電商成本計算,蝦皮手續費計算,賣家利潤分析,電商工具,網路開店計算"
+    />
+    <meta name="author" content="電商工具開發團隊" />
+
+    <!-- Open Graph 標籤 (Facebook, LINE 分享) -->
+    <meta property="og:title" content="蝦皮賣家利潤計算機 | 免費線上計算工具" />
+    <meta
+      property="og:description"
+      content="免費蝦皮賣家利潤計算機，支援多件優惠、大促活動費率計算。一鍵計算單件淨利、訂單總利潤，支援2026年新制度比較。"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://yoursite.com/ShopeeSeller.html" />
+    <meta
+      property="og:image"
+      content="https://yoursite.com/img/shopee-calculator-preview.jpg"
+    />
+    <meta property="og:locale" content="zh_TW" />
+    <meta property="og:site_name" content="電商工具箱" />
+
+    <!-- Twitter Card 標籤 -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="蝦皮賣家利潤計算機 | 免費線上計算工具"
+    />
+    <meta
+      name="twitter:description"
+      content="免費蝦皮賣家利潤計算機，支援多件優惠、大促活動費率計算。一鍵計算單件淨利、訂單總利潤。"
+    />
+    <meta
+      name="twitter:image"
+      content="https://yoursite.com/img/shopee-calculator-preview.jpg"
+    />
+
+    <!-- 結構化資料 (JSON-LD) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "蝦皮賣家利潤計算機",
+        "description": "免費線上蝦皮賣家利潤計算工具，支援多件優惠、大促活動費率計算，幫助賣家精準計算利潤。",
+        "url": "https://yoursite.com/ShopeeSeller.html",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Web Browser",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "TWD"
+        },
+        "creator": {
+          "@type": "Organization",
+          "name": "電商工具開發團隊"
+        },
+        "featureList": [
+          "蝦皮利潤計算",
+          "多件優惠支援",
+          "大促活動費率",
+          "2026新制度比較",
+          "商品參數儲存",
+          "即時計算結果"
+        ]
+      }
+    </script>
+
+    <!-- 網站圖示 -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
+    <!-- 語言替代版本 -->
+    <link
+      rel="alternate"
+      hreflang="zh-TW"
+      href="https://yoursite.com/ShopeeSeller.html"
+    />
+    <link
+      rel="alternate"
+      hreflang="zh-CN"
+      href="https://yoursite.com/zh-cn/ShopeeSeller.html"
+    />
+
+    <!-- 規範網址 -->
+    <link rel="canonical" href="https://yoursite.com/ShopeeSeller.html" />
+
+    <!-- 預載入重要資源 -->
+    <link rel="preconnect" href="https://cdn.tailwindcss.com" />
+    <link rel="dns-prefetch" href="https://cdn.tailwindcss.com" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body {
+        background-color: #fffaf9;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          sans-serif;
+      }
+      .shopee-orange {
+        color: #ee4d2d;
+      }
+      .shopee-bg {
+        background-color: #ee4d2d;
+      }
+      .shopee-light-bg {
+        background-color: #fff5f2;
+      }
+      .card {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 4px 20px rgba(238, 77, 45, 0.08);
+      }
+
+      .switch {
+        position: relative;
+        display: inline-block;
+        width: 44px;
+        height: 22px;
+      }
+      .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+      .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #e2e8f0;
+        transition: 0.4s;
+        border-radius: 22px;
+      }
+      .slider:before {
+        position: absolute;
+        content: "";
+        height: 16px;
+        width: 16px;
+        left: 3px;
+        bottom: 3px;
+        background-color: white;
+        transition: 0.4s;
+        border-radius: 50%;
+      }
+      input:checked + .slider {
+        background-color: #ee4d2d;
+      }
+      input:checked + .slider:before {
+        transform: translateX(22px);
+      }
+
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+      .mode-btn-active {
+        background-color: #ee4d2d;
+        color: white;
+        border-color: transparent;
+      }
+      .mode-btn-inactive {
+        background-color: white;
+        color: #64748b;
+        border-color: #f1f5f9;
+      }
+    </style>
+  </head>
+  <body class="lg:h-screen lg:overflow-hidden">
+    <div class="h-full lg:h-screen flex flex-col w-full max-w-none lg:max-w-[75vw] mx-auto p-2 md:p-4 lg:p-6">
+      <header class="text-center mb-4 lg:mb-6 flex-shrink-0">
+        <h1 class="text-xl md:text-2xl lg:text-3xl font-extrabold shopee-orange mb-2">
+          蝦皮賣家利潤試算
+        </h1>
+        <p class="text-slate-400 text-xs md:text-sm">
+          支援多件優惠參數存摺：自動帶入數量、成本與售價
+        </p>
+      </header>
+
+      <div class="grid grid-cols-1 lg:grid-cols-5 gap-3 lg:gap-6 flex-grow">
+        <!-- 左側：輸入區 -->
+        <div class="lg:col-span-2 flex flex-col space-y-2 lg:space-y-3">
+          <!-- 商品選擇下拉選單 -->
+          <div
+            class="card p-3 lg:p-4 border border-orange-100 bg-orange-50/30 shadow-sm flex-shrink-0"
+          >
+            <label class="block text-xs font-bold text-orange-700 mb-2 ml-1"
+              >快速套用商品參數 (含數量)</label
+            >
+            <select
+              id="product-selector"
+              onchange="loadProduct(this.value)"
+              class="w-full px-3 py-2.5 bg-white border border-orange-200 rounded-xl outline-none focus:ring-2 focus:ring-orange-300 text-sm text-slate-700 shadow-sm transition-all"
+            >
+              <option value="">-- 請選擇儲存紀錄 --</option>
+            </select>
+          </div>
+
+          <!-- 基本輸入設定 -->
+          <div class="card p-3 lg:p-4 border border-orange-50 flex-shrink-0">
+            <h2 class="text-base lg:text-lg font-bold mb-3 lg:mb-5 flex items-center text-slate-700">
+              <span class="w-1.5 h-5 shopee-bg mr-3 rounded-full"></span>
+              當前試算數值
+            </h2>
+            <div class="space-y-3 lg:space-y-4">
+              <div>
+                <label
+                  class="block text-xs font-semibold text-slate-500 mb-1.5 ml-1"
+                  >商品成本 (單件)</label
+                >
+                <div class="relative">
+                  <span
+                    class="absolute left-3 top-2.5 text-slate-400 text-sm font-medium"
+                    >NT$</span
+                  >
+                  <input
+                    type="number"
+                    id="cost"
+                    value="500"
+                    class="w-full pl-12 pr-4 py-2.5 bg-slate-50 border border-slate-100 rounded-xl focus:bg-white focus:ring-2 focus:ring-orange-200 outline-none transition-all"
+                  />
+                </div>
+              </div>
+              <div>
+                <label
+                  class="block text-xs font-semibold text-slate-500 mb-1.5 ml-1"
+                  >商品售價 (單件)</label
+                >
+                <div class="relative">
+                  <span
+                    class="absolute left-3 top-2.5 text-slate-400 text-sm font-medium"
+                    >NT$</span
+                  >
+                  <input
+                    type="number"
+                    id="price"
+                    value="1000"
+                    class="w-full pl-12 pr-4 py-2.5 bg-slate-50 border border-slate-100 rounded-xl focus:bg-white focus:ring-2 focus:ring-orange-200 outline-none transition-all"
+                  />
+                </div>
+              </div>
+              <div>
+                <label
+                  class="block text-xs font-semibold text-slate-500 mb-1.5 ml-1"
+                  >銷售數量</label
+                >
+                <input
+                  type="number"
+                  id="quantity"
+                  value="1"
+                  class="w-full px-4 py-2.5 bg-slate-50 border border-slate-100 rounded-xl focus:bg-white focus:ring-2 focus:ring-orange-200 outline-none transition-all"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- 費率與大促 -->
+          <div class="card p-3 lg:p-4 border border-orange-50 flex-shrink-0">
+            <h2 class="text-base lg:text-lg font-bold mb-3 lg:mb-5 flex items-center text-slate-700">
+              <span class="w-1.5 h-5 shopee-bg mr-3 rounded-full"></span>
+              費率與大促
+            </h2>
+            <div class="space-y-3 lg:space-y-4">
+              <div>
+                <label
+                  class="block text-xs font-semibold text-slate-500 mb-1.5 ml-1"
+                  >平台服務費率 (%)</label
+                >
+                <div class="relative">
+                  <input
+                    type="number"
+                    id="base_rate"
+                    value="5.5"
+                    step="0.1"
+                    class="w-full px-4 py-2.5 bg-slate-50 border border-slate-100 rounded-xl focus:bg-white focus:ring-2 focus:ring-orange-200 outline-none transition-all"
+                  />
+                  <span class="absolute right-4 top-2.5 text-slate-400 text-sm"
+                    >%</span
+                  >
+                </div>
+              </div>
+              <div
+                class="flex items-center justify-between p-4 shopee-light-bg rounded-2xl border border-orange-100"
+              >
+                <div>
+                  <p class="text-sm font-bold shopee-orange">大促活動期間</p>
+                  <p class="text-[10px] text-orange-400">額外加收 2% 服務費</p>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="is_event" onchange="calculate()" />
+                  <span class="slider"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 右側：結果與管理 -->
+        <div class="lg:col-span-3 flex flex-col space-y-2 lg:space-y-3 min-h-0">
+          <div class="card p-3 lg:p-4 flex-shrink-0">
+            <h2 class="text-sm lg:text-base font-bold mb-2 lg:mb-3 text-slate-700">計費模式選擇</h2>
+            <div class="grid grid-cols-3 gap-2 lg:gap-3 mb-3 lg:mb-4">
+              <button
+                onclick="setMode('current')"
+                id="btn-current"
+                class="mode-btn mode-btn-active py-2.5 rounded-xl border-2 text-xs font-bold transition-all"
+              >
+                現行制度
+              </button>
+              <button
+                onclick="setMode('2026_1')"
+                id="btn-2026_1"
+                class="mode-btn mode-btn-inactive py-2.5 rounded-xl border-2 text-xs font-bold transition-all"
+              >
+                2026 方案一
+              </button>
+              <button
+                onclick="setMode('2026_2')"
+                id="btn-2026_2"
+                class="mode-btn mode-btn-inactive py-2.5 rounded-xl border-2 text-xs font-bold transition-all"
+              >
+                2026 方案二
+              </button>
+            </div>
+
+            <div
+              id="logic-info"
+              class="mb-3 lg:mb-4 p-2 lg:p-3 bg-blue-50 text-blue-600 text-[10px] lg:text-[11px] font-medium rounded-xl border border-blue-100 text-center"
+            >
+              計費模式：基礎服務費 + 2% 金流費
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-2 lg:gap-3 mb-3 lg:mb-4">
+              <div
+                class="p-5 bg-white border border-slate-100 rounded-3xl text-center shadow-sm"
+              >
+                <p class="text-xs text-slate-400 font-semibold mb-2">
+                  單件商品淨利
+                </p>
+                <p
+                  id="unit-profit"
+                  class="text-3xl font-black shopee-orange tracking-tight"
+                >
+                  NT$ 0
+                </p>
+              </div>
+              <div
+                class="p-5 shopee-light-bg border border-orange-100 rounded-3xl text-center shadow-sm"
+              >
+                <p class="text-xs shopee-orange font-semibold opacity-70 mb-2">
+                  整筆訂單淨利
+                </p>
+                <p
+                  id="net-profit"
+                  class="text-3xl font-black shopee-orange tracking-tight"
+                >
+                  NT$ 0
+                </p>
+              </div>
+            </div>
+
+            <div class="space-y-3 px-1">
+              <div class="flex justify-between items-center py-1">
+                <span class="text-xs text-slate-500 font-medium"
+                  >總銷售額 / 毛利率</span
+                >
+                <span class="text-sm font-bold"
+                  ><span id="total-revenue">NT$ 0</span> /
+                  <span id="margin" class="text-emerald-600">0%</span></span
+                >
+              </div>
+              <div class="flex justify-between items-center py-1">
+                <span class="text-xs text-slate-500 font-medium"
+                  >平台扣除總額</span
+                >
+                <span
+                  id="total-platform-fees"
+                  class="text-sm font-bold text-red-500"
+                  >NT$ 0</span
+                >
+              </div>
+
+              <div
+                class="mt-4 pt-4 border-t border-slate-50 space-y-2 text-[11px]"
+              >
+                <div class="flex justify-between">
+                  <span class="text-slate-400">基礎服務費 / 金流費</span>
+                  <span class="text-slate-600 font-medium"
+                    ><span id="fee-base">NT$ 0</span> /
+                    <span id="fee-payment">NT$ 0</span></span
+                  >
+                </div>
+                <div
+                  id="extra-fee-row"
+                  class="flex justify-between text-red-500 font-bold hidden"
+                >
+                  <span id="extra-fee-label">2026 加成方案</span>
+                  <span id="fee-extra">NT$ 0</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 商品參數庫管理 -->
+          <div class="card p-4 lg:p-6 border border-slate-100 flex-1 min-h-0 flex flex-col">
+            <h2
+              class="text-sm font-bold mb-3 lg:mb-4 text-slate-600 flex justify-between items-center flex-shrink-0"
+            >
+              新增商品參數紀錄
+              <span class="text-[10px] text-slate-400 font-normal"
+                >記錄當前畫面數值</span
+              >
+            </h2>
+            <div class="space-y-2 lg:space-y-3 flex-shrink-0"></div>
+              <input
+                type="text"
+                id="new-product-name"
+                placeholder="商品紀錄名稱 (例如: 耳機-零售 或 耳機-多件)"
+                class="w-full px-4 py-2.5 text-xs bg-slate-50 border border-slate-100 rounded-lg outline-none focus:ring-1 focus:ring-orange-200"
+              />
+              <div class="flex gap-2">
+                <button
+                  onclick="saveProduct()"
+                  class="flex-grow shopee-bg text-white py-2.5 rounded-lg text-xs font-bold hover:opacity-90 transition-opacity"
+                >
+                  儲存當前設定至參數庫
+                </button>
+                <button
+                  onclick="clearAllProducts()"
+                  class="px-3 py-2 border border-slate-200 text-slate-400 text-xs rounded-lg hover:text-red-500 hover:border-red-100 transition-all"
+                >
+                  清空庫
+                </button>
+              </div>
+            </div>
+
+            <div
+              id="product-list"
+              class="mt-3 lg:mt-5 space-y-2 flex-1 overflow-y-auto pr-1"
+            >
+              <!-- 管理列表 -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 頁尾 - 整個頁面最下方 -->
+      <footer class="lg:hidden mt-4 pt-4 border-t border-slate-200 flex-shrink-0">
+        <div class="text-center">
+          <!-- 手機版 - 分行顯示 -->
+          <div class="text-sm text-slate-600 space-y-2">
+            <p>免費蝦皮賣家利潤計算工具 - 支援2026新制度比較</p>
+            <div class="flex flex-wrap justify-center gap-3 text-xs">
+              <span>✓ 免費使用</span>
+              <span>✓ 即時計算</span>
+              <span>✓ 數據本地儲存</span>
+            </div>
+            <p class="text-xs text-slate-500">此計算機僅供參考，實際以蝦皮官方公告為準。</p>
+            <p class="text-slate-600">© 2025 Jessie Pan</p>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <!-- 電腦版 - 固定在螢幕底部 -->
+    <footer class="hidden lg:block fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 py-2 z-10">
+      <div class="text-center text-xs text-slate-600">
+        免費蝦皮賣家利潤計算工具 - 支援2026新制度比較 ✓ 免費使用 ✓ 即時計算 ✓ 數據本地儲存 此計算機僅供參考，實際以蝦皮官方公告為準。© 2025 Jessie Pan
+      </div>
+    </footer>
+
+
+
+    <script>
+      let currentMode = "current";
+      let products = JSON.parse(
+        localStorage.getItem("shopee_calc_products_v2") || "[]"
+      );
+
+      const inputs = ["cost", "price", "quantity", "base_rate"];
+      inputs.forEach((id) => {
+        document.getElementById(id).addEventListener("input", calculate);
+      });
+
+      function setMode(mode) {
+        currentMode = mode;
+        document.querySelectorAll(".mode-btn").forEach((btn) => {
+          btn.classList.remove("mode-btn-active");
+          btn.classList.add("mode-btn-inactive");
+        });
+        document
+          .getElementById(`btn-${mode}`)
+          .classList.replace("mode-btn-inactive", "mode-btn-active");
+
+        const logicInfo = document.getElementById("logic-info");
+        const extraRow = document.getElementById("extra-fee-row");
+        const extraLabel = document.getElementById("extra-fee-label");
+
+        if (mode === "current") {
+          logicInfo.innerText = "目前制度：基礎費 + 2% 金流費";
+          logicInfo.className =
+            "mb-6 p-3 bg-blue-50 text-blue-600 text-[11px] font-medium rounded-xl border border-blue-100 text-center";
+          extraRow.classList.add("hidden");
+        } else {
+          logicInfo.className =
+            "mb-6 p-3 bg-orange-50 text-orange-600 text-[11px] font-medium rounded-xl border border-orange-100 text-center";
+          extraRow.classList.remove("hidden");
+          if (mode === "2026_1") {
+            logicInfo.innerText = "2026 方案一：基礎費 + 2.5% 金流費 + 6% 加成";
+            extraLabel.innerText = "2026 方案一 (6%)";
+          } else {
+            logicInfo.innerText =
+              "2026 方案二：基礎費 + 2.5% 金流費 + 固定 60 元";
+            extraLabel.innerText = "2026 方案二 (固定)";
+          }
+        }
+        calculate();
+      }
+
+      function calculate() {
+        const cost = parseFloat(document.getElementById("cost").value) || 0;
+        const price = parseFloat(document.getElementById("price").value) || 0;
+        const qty = parseFloat(document.getElementById("quantity").value) || 0;
+        const baseRate =
+          parseFloat(document.getElementById("base_rate").value) || 0;
+        const isEvent = document.getElementById("is_event").checked;
+
+        const totalRevenue = price * qty;
+        const totalCost = cost * qty;
+        const paymentRate = currentMode === "current" ? 0.02 : 0.025;
+
+        const baseFee = Math.round(totalRevenue * (baseRate / 100));
+        const paymentFee = Math.round(totalRevenue * paymentRate);
+        const eventFee = isEvent ? Math.round(totalRevenue * 0.02) : 0;
+
+        let extraFee = 0;
+        if (currentMode === "2026_1")
+          extraFee = Math.round(totalRevenue * 0.06);
+        else if (currentMode === "2026_2") extraFee = 60;
+
+        const totalFees = baseFee + paymentFee + eventFee + extraFee;
+        const netProfit = totalRevenue - totalCost - totalFees;
+        const unitProfit = qty > 0 ? netProfit / qty : 0;
+        const margin = totalRevenue > 0 ? (netProfit / totalRevenue) * 100 : 0;
+
+        document.getElementById(
+          "total-revenue"
+        ).innerText = `NT$ ${totalRevenue.toLocaleString()}`;
+        document.getElementById(
+          "total-platform-fees"
+        ).innerText = `NT$ ${totalFees.toLocaleString()}`;
+        document.getElementById("unit-profit").innerText = `NT$ ${Math.round(
+          unitProfit
+        ).toLocaleString()}`;
+        document.getElementById(
+          "net-profit"
+        ).innerText = `NT$ ${netProfit.toLocaleString()}`;
+        document.getElementById("margin").innerText = `${margin.toFixed(2)}%`;
+        document.getElementById(
+          "fee-base"
+        ).innerText = `NT$ ${baseFee.toLocaleString()}`;
+        document.getElementById(
+          "fee-payment"
+        ).innerText = `NT$ ${paymentFee.toLocaleString()}`;
+        document.getElementById(
+          "fee-extra"
+        ).innerText = `NT$ ${extraFee.toLocaleString()}`;
+
+        const unitProfitEl = document.getElementById("unit-profit");
+        const netProfitEl = document.getElementById("net-profit");
+        if (netProfit < 0) {
+          unitProfitEl.classList.replace("shopee-orange", "text-red-600");
+          netProfitEl.classList.replace("shopee-orange", "text-red-600");
+        } else {
+          unitProfitEl.classList.replace("text-red-600", "shopee-orange");
+          netProfitEl.classList.replace("text-red-600", "shopee-orange");
+        }
+      }
+
+      // 商品庫管理
+      function saveProduct() {
+        const name = document.getElementById("new-product-name").value.trim();
+        const cost = document.getElementById("cost").value;
+        const price = document.getElementById("price").value;
+        const quantity = document.getElementById("quantity").value;
+
+        if (!name) return;
+
+        products.push({ name, cost, price, quantity });
+        localStorage.setItem(
+          "shopee_calc_products_v2",
+          JSON.stringify(products)
+        );
+        document.getElementById("new-product-name").value = "";
+        updateProductUI();
+      }
+
+      function loadProduct(index) {
+        if (index === "") return;
+        const p = products[index];
+        document.getElementById("cost").value = p.cost;
+        document.getElementById("price").value = p.price;
+        document.getElementById("quantity").value = p.quantity;
+        calculate();
+      }
+
+      function deleteProduct(index) {
+        products.splice(index, 1);
+        localStorage.setItem(
+          "shopee_calc_products_v2",
+          JSON.stringify(products)
+        );
+        updateProductUI();
+      }
+
+      function clearAllProducts() {
+        if (confirm("確定要清空所有商品紀錄嗎？")) {
+          products = [];
+          localStorage.setItem(
+            "shopee_calc_products_v2",
+            JSON.stringify(products)
+          );
+          updateProductUI();
+        }
+      }
+
+      function updateProductUI() {
+        const selector = document.getElementById("product-selector");
+        const list = document.getElementById("product-list");
+
+        // 更新下拉選單
+        selector.innerHTML =
+          '<option value="">-- 套用商品紀錄 (含數量) --</option>' +
+          products
+            .map(
+              (p, i) =>
+                `<option value="${i}">${p.name} (${p.quantity}件 | C:${p.cost} | S:${p.price})</option>`
+            )
+            .join("");
+
+        // 更新管理列表
+        list.innerHTML = products
+          .map(
+            (p, i) => `
+                <div class="flex justify-between items-center bg-slate-50 p-3 rounded-xl border border-slate-100 group">
+                    <div class="flex flex-col truncate pr-2">
+                        <span class="text-[11px] text-slate-700 font-bold truncate">${p.name}</span>
+                        <span class="text-[9px] text-slate-400">數量: ${p.quantity} | 成本: ${p.cost} | 售價: ${p.price}</span>
+                    </div>
+                    <button onclick="deleteProduct(${i})" class="text-[10px] text-slate-300 hover:text-red-500 transition-colors px-2">刪除</button>
+                </div>
+            `
+          )
+          .join("");
+      }
+
+      // 初始執行
+      updateProductUI();
+      calculate();
+    </script>
+  </body>
+</html>
